@@ -2,31 +2,29 @@
 #define _ARRAY_HPP_
 
 namespace Data {
+    template<class Datatype>
     class Array
     {
         public:
-        int* _array;
+        Datatype* _array;
         int _size;
 
         explicit Array (int size);
 
         virtual ~Array ();
 
-        // void resize (int size);
+        void resize (int size);
 
-        // void insert(int item, int index);
+        void insert(Datatype item, int index);
 
-        // void remove(int index);
+        void remove(int index);
 
-        // Getter
+        int size ();
 
-        // int size ();
+        Datatype& operator[] (int index);
 
-        int& operator[] (int index);
-
-        operator int* ();
+        operator Datatype* ();
     };
-    
 }
 
 #endif // _ARRAY_HPP_

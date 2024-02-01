@@ -19,12 +19,15 @@ namespace Data {
 
         void remove(int index);
 
+        // Getter
+
         int size ();
 
         Datatype& operator[] (int index);
 
         operator Datatype* ();
     };
+    
 }
 
 #endif // _ARRAY_HPP_

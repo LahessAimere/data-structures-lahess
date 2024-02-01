@@ -1,8 +1,7 @@
-#ifndef _NONE_HPP_
-#define _NONE_HPP_
+#ifndef _NODE_HPP_
+#define _NODE_HPP_
 
-namespace Data
-{
+namespace Data {
     template<class Datatype>
     class Node
     {
@@ -15,6 +14,9 @@ namespace Data
         ~Node();
 
         void insertAfter(Datatype data);
+        
     };
 }
-#endif // _NONE_HPP_
+
+
+#endif // _NODE_HPP_

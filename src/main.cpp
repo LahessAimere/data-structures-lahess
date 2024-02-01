@@ -1,103 +1,93 @@
 #include <iostream>
 #include "Array.hpp"
 #include "Node.hpp"
+#include "NodeFactory.hpp"
 #include "LinkedList.hpp"
+#include "ListIterator.hpp"
 
 using namespace Data;
 
-template<class Datatype>
+template <class Datatype>
 void displayArray(Array<Datatype>& array);
 
-template<class Datatype>
-void displayList(LinkedList<Datatype>& list);
+template <class Datatype>
+void displayLinkedList(LinkedList<Datatype>& list);
 
 int main()
 {
-    std::cout << "Création des tableau et iniitalisations" << std::endl;
+    std::cout << "Création d'un Array de type int" << std::endl;
 
-    Array<int> arrayInt(5);
-    //Array<float> arrayFloat(10);
-    displayArray(arrayInt);
-    
-    std::cout << "#Implémentation du tableau" << std::endl;
-    arrayInt[0] = 12;
-    arrayInt[1] = 24;
-    arrayInt[2] = 2;
-    arrayInt[3] = 8;
-    arrayInt[4] = 6;
+    Array<int> intArr(5);
 
-    displayArray(arrayInt);
-    std::cout << "#Redimmension de tableau" << std::endl;
-    arrayInt.resize(8);
-    
-    displayArray(arrayInt);
-    std::cout << "#Insertion d'une valeur'" << std::endl;
-    arrayInt.insert(87, 2);
+    std::cout << "Get intArr size: " << intArr.size() << std::endl;
 
-    displayArray(arrayInt);
-    std::cout << "#Retirer une valeur'" << std::endl;
-    arrayInt.remove(3);
+    intArr[0] = 12;
+    intArr[1] = 24;
 
-    displayArray(arrayInt);
+    displayArray(intArr);
+
+    intArr.insert(24, 1);
+
+    displayArray(intArr);
+
+    intArr.remove(0);
+
+    displayArray(intArr);
+
+    intArr.resize(3);
+
+    displayArray(intArr);
+
+    // Node
+
+    Node<int>* n = NodeFactory<int>::createNode(10);
+
 
     LinkedList<int> list;
-    list.append(0);
-    list.append(1);
-    list.append(2);
-    displayList(list);
+    list.prepend(10);
+    list.prepend(5);
+    list.prepend(55);
+    ListIterator<int> itr(list);
+    displayLinkedList(list);
 
-    list.prepend(3);
-    displayList(list);
+    itr.start();
+    std::cout << "Itr position: " << itr.item() << std::endl;
 
-    list.removeHead();
-    displayList(list);
+    itr.forth();
+    std::cout << "Itr position: " << itr.item() << std::endl;
 
-    list.removeTail();
-    displayList(list);
+    std::cout << "Insert 4 after " << itr.item() << std::endl;
+    list.insert(itr, 4);
+    displayLinkedList(list);
 
+    std::cout << "Removing item: " << itr.item() << std::endl;
+    list.remove(itr);
 
-    LinkedList<float> list;
-    list.append(0.5);
-    list.append(1.5);
-    list.append(2.8);
-    displayList(list);
-
-    list.prepend(3.2);
-    displayList(list);
-
-    list.removeHead();
-    displayList(list);
-
-    list.removeTail();
-    displayList(list);
+    displayLinkedList(list);
 
     return 0;
 }
 
-template<class Datatype>
+template <class Datatype>
 void displayArray(Array<Datatype>& array)
 {
-    std::cout << "[";
-    for (int i = 0; i < array._size; i++)
+    std::cout << "[ ";
+    for(int i = 0; i < array.size(); ++i)
     {
         std::cout << array._array[i] << " ";
     }
     std::cout << "]" << std::endl;
 }
 
-template<class Datatype>
-void displayList(LinkedList<Datatype>& list)
+template <class Datatype>
+void displayLinkedList(LinkedList<Datatype>& list)
 {
-    Node<Datatype>* node = list._head;
-
-    if (node != nullptr)
+    auto itr = list.getIterator();
+    std::cout << "[ ";
+    while(itr.isValid())
     {
-        while (node != nullptr)
-        {
-            std::cout << node->_data;
-            std::cout << "->";
-            node = node->_next;
-        }
-        std::cout <<std::endl;
+        std::cout << itr.item() << " ";
+        itr.forth();
     }
+    std::cout << "]" << std::endl;
 }

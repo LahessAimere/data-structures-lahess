@@ -36,6 +36,24 @@ namespace Data
     }
 
     template <class Datatype>
+    void DListIterator<Datatype>::backward()
+    {
+        if (this->_node != nullptr)
+        {
+            this->_node = this->_node->_prev;
+        }
+    }
+
+    template <class Datatype>
+    void DListIterator<Datatype>::end()
+    {
+        if (this->_list != nullptr)
+        {
+            this->_node = this->_list->_tail;
+        }
+    }
+
+    template <class Datatype>
     Datatype& DListIterator<Datatype>::item()
     {
         return this->_node->_data;

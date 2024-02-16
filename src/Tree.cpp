@@ -5,16 +5,21 @@ namespace Data
     template<class Datatype>
     inline Tree<Datatype>::Tree()
     {
-        
+        this->_data = Datatype(0);
+        this->_parent = nullptr;
+    }
+
+    template<class Datatype>
+    inline Tree<Datatype>::Tree(Datatype data)
+    {
+        this->_data = data;
+        this->_parent = nullptr;
     }
 
     template<class Datatype>
     inline Tree<Datatype>::~Tree()
     {
-        for (Node* child = _children)
-                {
-                    delete child;
-                }
+        this->destroy();
     }
 
     template<class Datatype>
@@ -25,27 +30,24 @@ namespace Data
 
         int countNode = 1;
 
-        for (Node* child = _children)
+        DListIterator<Node*> itr = this->_children;
+        for (itr.start(); itr.isValid(); itr.forth())
         {
-            countNode += count(child);
+            countNode += itr.item()->count();
         }
-
     return countNode;
     }
 
     template<class Datatype>
     void Tree<Datatype>::destroy()
     {
-        for (Node* child = _children)
+        DListIterator<Node*> itr(this->_children);
+        Node* node = nullptr;
+        itr.start();
+        while (itr.isValid())
         {
-            child->destroy();
-            delete child;
-        }
-        _children.clear();
-
-        if (_parent != nullptr)
-        {
-            _parent->_children.remove(this);
+            node = itr.item();
+            this->_children.removeAfter(itr);
         }
     }
 

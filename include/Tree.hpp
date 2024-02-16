@@ -16,6 +16,7 @@ namespace Data
         DLinkedList<Node*> _children;
 
         Tree();
+        Tree(Datatype data);
         ~Tree();
 
         int count();
